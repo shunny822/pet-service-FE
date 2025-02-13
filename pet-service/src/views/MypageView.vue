@@ -11,8 +11,8 @@
           <p>Email: {{ user.email }}</p>
           <p class="second-p">Phone: {{ user.phoneNumber }}</p>
           <div class="buttons">
-            <button @click="isEditing = true" class="edit-btn">Edit Info</button>
-            <button @click="deleteAccount" class="delete-btn">Delete Account</button>
+            <button @click="isEditing = true" class="edit-btn">정보 수정</button>
+            <button @click="openDeleteModal" class="delete-btn">회원 탈퇴</button>
           </div>
         </div>
   
@@ -38,6 +38,17 @@
         </div>
   
       </div>
+
+      <!-- 탈퇴 확인 모달 -->
+        <div v-if="isModalVisible" class="modal-overlay">
+            <div class="modal-content">
+                <h3>정말 탈퇴하시겠습니까?</h3>
+                <div class="modal-buttons">
+                    <button @click="deleteAccount" class="confirm-btn">탈퇴하기</button>
+                    <button @click="closeDeleteModal" class="cancel-btn">취소</button>
+                </div>
+            </div>
+        </div>
     </div>
   </template>
   
@@ -58,6 +69,7 @@ import { SERVER_URL } from '@/common/constant';
           phoneNumber: '',
         },
         isEditing: false, // 수정 모드 상태
+        isModalVisible: false,
       };
     },
     created() {
@@ -106,118 +118,169 @@ import { SERVER_URL } from '@/common/constant';
           alert('Error updating user info');
         }
       },
-      async deleteAccount() {
-        try {
-          const response = await fetch('', {
-            method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-            }
-          });
-  
-          if (response.ok) {
-            alert('Your account has been deleted successfully.');
-            this.$router.push('/');
-          } else {
-            alert('Failed to delete account.');
+      openDeleteModal() {
+      this.isModalVisible = true; // 모달을 띄운다
+    },
+    closeDeleteModal() {
+      this.isModalVisible = false; // 모달을 닫는다
+    },
+    async deleteAccount() {
+      try {
+        const response = await fetch('', {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           }
-        } catch (error) {
-          console.error('Error deleting account:', error);
-          alert('Error deleting account.');
+        });
+
+        if (response.ok) {
+          alert('Your account has been deleted successfully.');
+          this.$router.push('/'); // 로그인 페이지로 리디렉션
+        } else {
+          alert('Failed to delete account.');
         }
+      } catch (error) {
+        console.error('Error deleting account:', error);
+        alert('Error deleting account.');
       }
+      this.closeDeleteModal(); // 모달 닫기
+    }
     }
   };
   </script>
   
-  <style scoped>
-  .mypage-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-  }
-  
-  .mypage-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  .profile-picture .profile-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-top: 3rem;
-  }
-  
-  .user-info {
-    margin-bottom: 2rem;
-  }
+<style scoped>
 
-  .user-info h3 {
-    margin-bottom: 3rem;
-  }
+.mypage-container {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: #f4f4f4;
+}
 
-  .second-p {
+.mypage-content {
+background-color: white;
+padding: 2rem;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+width: 100%;
+max-width: 400px;
+text-align: center;
+}
+
+.profile-picture .profile-img {
+width: 120px;
+height: 120px;
+border-radius: 50%;
+object-fit: cover;
+margin-top: 3rem;
+}
+
+.user-info {
+margin-bottom: 2rem;
+}
+
+.user-info h3 {
+margin-bottom: 3rem;
+}
+
+.second-p {
+margin-bottom: 3rem;
+}
+
+.input-group {
+margin-bottom: 1rem;
+}
+
+.input-group label {
+display: block;
+margin-bottom: 0.5rem;
+margin-left: 1rem;
+text-align: left;
+}
+
+.input-group input {
+width: 90%;
+padding: 0.5rem;
+border-radius: 5px;
+border: 1px solid #ccc;
+}
+
+.buttons {
+display: flex;
+justify-content: space-between;
+margin: 0 0.7rem;
+}
+
+.edit-btn, .delete-btn, .save-btn, .cancel-btn {
+padding: 0.5rem 1rem;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.edit-btn {
+background-color: #4CAF50;
+color: white;
+}
+
+.save-btn {
+background-color: #4CAF50;
+color: white;
+}
+
+.cancel-btn {
+background-color: #ccc;
+color: white;
+}
+
+.delete-btn {
+background-color: #f44336;
+color: white;
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content h3 {
     margin-bottom: 3rem;
-  }
-  
-  .input-group {
-    margin-bottom: 1rem;
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    margin-left: 1rem;
-    text-align: left;
-  }
-  
-  .input-group input {
-    width: 90%;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 0.7rem;
-  }
-  
-  .edit-btn, .delete-btn, .save-btn, .cancel-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .edit-btn {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .save-btn {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .cancel-btn {
-    background-color: #ccc;
-    color: white;
-  }
-  
-  .delete-btn {
-    background-color: #f44336;
-    color: white;
-  }
-  </style>
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirm-btn, .cancel-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: #f44336;
+  color: white;
+}
+</style>
   
