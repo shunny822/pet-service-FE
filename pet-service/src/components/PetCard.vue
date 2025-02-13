@@ -1,12 +1,30 @@
 <script>
+  import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
   import { Swiper, SwiperSlide } from 'swiper/vue';
-  import 'swiper/swiper-bundle.css';
-  
+
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/pagination';
+  import 'swiper/css/scrollbar';
+
   export default {
     name: 'DogCarousel',
     components: {
       Swiper,
       SwiperSlide
+    },
+    setup() {
+      const onSwiper = (swiper) => {
+        console.log(swiper);
+      };
+      const onSlideChange = () => {
+        console.log('slide change');
+      };
+      return {
+        onSwiper,
+        onSlideChange,
+        modules: [Navigation, Pagination, Scrollbar, A11y],
+      };
     },
     data() {
       return {
@@ -42,12 +60,13 @@
     <div class="carousel-container">
     <!-- TODO: swiper 고치기 -->
       <swiper
+        :modules="modules"
         :slides-per-view="1"
         :space-between="10"
-        :loop="true"
-        :pagination="true"
-        :navigation="true"
-        class="mySwiper"
+        navigation
+        :pagination="{ clickable: true }"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
       >
         <swiper-slide v-for="dog in dogs" :key="dog.id">
           <div class="dog-card">
