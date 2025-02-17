@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import SignupView from '@/views/SignupView.vue'
 import MypageView from '@/views/MypageView.vue'
+import PaymentTest from '@/components/paymentTest.vue'
+import CodeManagementView from '@/views/CodeManagementView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +28,16 @@ const router = createRouter({
       path: '/mypage',
       name: 'mypage',
       component: MypageView,
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: PaymentTest,
+    },
+    {
+      path: '/codeManagement',
+      name: 'codeManagement',
+      component: CodeManagementView,
     },
   ],
 })
