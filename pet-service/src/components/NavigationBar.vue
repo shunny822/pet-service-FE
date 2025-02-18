@@ -6,7 +6,7 @@
   
       <div class="nav-links">
         <button class="nav-button" @click="navigateTo('codemanagement')">관리자</button>
-        <button class="nav-button" @click="navigateTo('login')">로그인</button>
+        <button class="nav-button" @click="logout">로그아웃</button>
         <button class="nav-button" @click="navigateTo('shop')">쇼핑몰</button>
         <button class="nav-button" @click="navigateTo('pet-sitter')">펫시터</button>
       </div>
@@ -14,6 +14,8 @@
   </template>
   
   <script>
+import { SERVER_URL } from '@/common/constant';
+
   export default {
     name: "NavigationBar",
     methods: {
@@ -22,6 +24,17 @@
       },
       navigateTo(page) {
         this.$router.push(`/${page}`);
+      },
+      async logout() {
+        this.$emit("logout");
+        try {
+          const response = await fetch(`${SERVER_URL}/auth/logout`);
+          if (response.ok) {
+            console.log("Logout successfully.");
+          }
+        } catch (error) {
+          console.error("Logout failed:", error);
+        }
       },
     },
   };

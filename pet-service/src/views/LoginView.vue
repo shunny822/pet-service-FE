@@ -29,9 +29,10 @@ methods: {
         }
         
         // TODO: 토큰 처리
-        // const data = await response.json();
-        // localStorage.setItem('authToken', data.token);
-        this.$router.push('/');
+        const data = await response.json();
+        console.log(data)
+        localStorage.setItem('userId', data);
+        this.$router.push('');
       } catch (error) {
         console.log(error)
         alert('Invalid email or password. Please try again.');
