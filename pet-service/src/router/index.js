@@ -6,6 +6,7 @@ import MypageView from '@/views/MypageView.vue'
 import PaymentTest from '@/components/paymentTest.vue'
 import CodeManagementView from '@/views/CodeManagementView.vue'
 import PetSitterListView from '@/views/PetSitterListView.vue'
+import PetSitterRegisterView from '@/views/PetSitterRegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/pet-sitter',
       name: 'pet-sitter',
       component: PetSitterListView,
+    },
+    {
+      path: '/pet-sitter-register',
+      name: 'pet-sitter-register',
+      component: PetSitterRegisterView,
     },
   ],
 })
