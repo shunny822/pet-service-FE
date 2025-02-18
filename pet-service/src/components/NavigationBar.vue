@@ -8,7 +8,7 @@
         <button class="nav-button" @click="navigateTo('codemanagement')">관리자</button>
         <button class="nav-button" @click="navigateTo('login')">로그인</button>
         <button class="nav-button" @click="navigateTo('shop')">쇼핑몰</button>
-        <button class="nav-button" @click="navigateTo('petsitter')">펫시터</button>
+        <button class="nav-button" @click="navigateTo('pet-sitter')">펫시터</button>
       </div>
     </nav>
   </template>

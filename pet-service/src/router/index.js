@@ -5,6 +5,7 @@ import SignupView from '@/views/SignupView.vue'
 import MypageView from '@/views/MypageView.vue'
 import PaymentTest from '@/components/paymentTest.vue'
 import CodeManagementView from '@/views/CodeManagementView.vue'
+import PetSitterListView from '@/views/PetSitterListView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/codeManagement',
       name: 'codeManagement',
       component: CodeManagementView,
+    },
+    {
+      path: '/pet-sitter',
+      name: 'pet-sitter',
+      component: PetSitterListView,
     },
   ],
 })
