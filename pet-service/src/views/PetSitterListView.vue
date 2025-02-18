@@ -71,7 +71,8 @@ export default {
       this.$router.push('/pet-sitter-register')
     },
     goToDetail(id) {
-      this.$router.push(`/pet-sitter/${id}`)
+      this.$router.push(`/pet-service-request`)
+      // this.$router.push(`/pet-sitter/${id}`)
     }
   },
   mounted() {

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-container">
         <button @click="onPayment">
             결제하기
         </button>
@@ -16,7 +16,7 @@ const onPayment = () => {
         pg: 'uplus', // 채널로 등록된 PG사만 사용가능하다.PG사마다 결제 화면이 달라진다
         pay_method: 'card', // 결제수단
         merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-        amount: 10, // 결제금액
+        amount: 100, // 결제금액
         name: '펫시터 결제', // 주문명
         buyer_name: '홍길동', // 구매자 이름
         buyer_tel: '01012341234', // 구매자 전화번호
@@ -42,3 +42,9 @@ const callback = (response) => {
     }
 };
 </script>
+
+<style>
+.main-container {
+    margin-top: 100px;
+}
+</style>
